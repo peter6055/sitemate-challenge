@@ -12,6 +12,9 @@ app.get('/', (req, res) => {
 });
 
 
+require("./src/routes/ticket.routes.js")(express, app);
+
+
 const PORT = 3050;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
