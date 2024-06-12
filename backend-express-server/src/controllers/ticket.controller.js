@@ -14,26 +14,6 @@ let ticket = [
 ]
 
 
-/*
-    API: GET /ticket/:ticketId
-    ticketId = "all" -> return all tickets
-    ticketId = "1" -> return ticket with ticket_id = 1
-
-
-    API: PUT /ticket
-    ticket_name = name of the ticket
-    ticket_description = description of the ticket
-
-
-    API: POST /ticket
-    ticket_id = id to update
-    ticket_name = new name of the ticket
-    ticket_description = mew description of the ticket
-
-
-    API: DELETE /ticket/:ticketId
-    ticket_id = id to delete
-*/
 
 exports.ticket = async (req, res) => {
     let result;
@@ -146,6 +126,6 @@ exports.ticket = async (req, res) => {
 }
 
 
-function error(res, code, msg) {
+function error(res, code, msg){
     res.status(code).send(msg);
 }

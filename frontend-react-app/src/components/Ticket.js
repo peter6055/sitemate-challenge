@@ -1,23 +1,11 @@
 import {Button, Col, Form, Input, Row, Space, Table} from "antd";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getTicketAPI} from "../datas/ticket-service";
 
 
 const Ticket = () => {
-    const [data, setData] = useState([
-        {
-            ticket_name: '1',
-            ticket_description: 'Mike',
-
-        },
-        {
-            ticket_name: '2',
-            ticket_description: 'John',
-        }
-    ]);
-
+    const [data, setData] = useState([]);
     const [issueForm] = Form.useForm();
-
-
 
     const columns = [
         {
@@ -42,6 +30,16 @@ const Ticket = () => {
         },
     ];
 
+
+
+    // ----- get data ------
+    useEffect( () => {
+        fetchData();
+    },[])
+
+    async function fetchData() {
+        setData(await getTicketAPI("all"));
+    }
 
     return (
         <>

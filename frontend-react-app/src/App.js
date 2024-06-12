@@ -1,6 +1,5 @@
 import './App.css';
 import Ticket from './components/Ticket';
-import {Flex} from "antd";
 
 function App() {
   return (
