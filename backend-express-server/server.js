@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 
-require("./src/routes/ticket.routes.js")(express, app);
+require("./src/routes/ticket.route.js")(express, app);
 
 
 const PORT = 4000;

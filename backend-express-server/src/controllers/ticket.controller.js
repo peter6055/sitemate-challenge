@@ -1,5 +1,4 @@
 var uuid = require('uuid');
-// var ticket = require('../data/ticket');
 
 let ticket = [
     {
