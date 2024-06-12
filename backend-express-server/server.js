@@ -8,14 +8,14 @@ app.use(cors())
 
 
 app.get('/', (req, res) => {
-    res.send('This server works');
+    res.send('200 OK');
 });
 
 
 require("./src/routes/ticket.routes.js")(express, app);
 
 
-const PORT = 3050;
+const PORT = 4000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });

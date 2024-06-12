@@ -1,4 +1,3 @@
-const controller = require("../controllers/ticket.controller");
 module.exports = (express, app) => {
     const controller = require("../controllers/ticket.controller.js");
     const router = express.Router();
