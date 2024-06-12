@@ -15,10 +15,18 @@ export const getTicketAPI = async (ticketId) => {
 export const createTicketAPI = async (ticketData) => {
     const response = await axios.put(`${API_HOST}${SERVICE_NAME}`, ticketData);
     return response.data;
-
 }
 
 
+export const updateTicketAPI = async (ticketId, ticketData) => {
+    const data = {
+        ticket_id: ticketId,
+        ticket_name: ticketData.ticket_name,
+        ticket_description: ticketData.ticket_description
+    }
+    const response = await axios.post(`${API_HOST}${SERVICE_NAME}`, data);
+    return response.data;
+}
 
 
 export const deleteTicketAPI = async (ticketId) => {

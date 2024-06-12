@@ -1,6 +1,6 @@
 import {Button, Col, Form, Input, Row, Space, Table} from "antd";
 import {useEffect, useState} from "react";
-import {createTicketAPI, deleteTicketAPI, getTicketAPI} from "../datas/ticket-service";
+import {createTicketAPI, deleteTicketAPI, getTicketAPI, updateTicketAPI} from "../datas/ticket-service";
 
 
 const Ticket = () => {
@@ -23,7 +23,7 @@ const Ticket = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button type="link">Edit</Button>
+                    <Button type="link" onClick={()=>{editTicket(record)}}>Edit</Button>
                     <Button type="link" onClick={()=>{deleteTicket(record.ticket_id)}}>Delete</Button>
                 </Space>
             ),
@@ -50,7 +50,18 @@ const Ticket = () => {
             ticket_description: issueForm.getFieldValue('ticket_description')
         }
 
-        setData(await createTicketAPI(data));
+
+        if(onUpdateId === null){ // add new ticket
+            // refresh data
+            setData(await createTicketAPI(data));
+
+        } else{ // update ticket
+            // refresh data
+            setData(await updateTicketAPI(onUpdateId, data));
+
+            // remove onUpdateId
+            setOnUpdateId(null);
+        }
 
         // clear form
         issueForm.resetFields();
@@ -58,6 +69,18 @@ const Ticket = () => {
     }
 
 
+    // ------ edit ticket ------
+    const [onUpdateId, setOnUpdateId] = useState(null);
+    const editTicket = (ticket) => {
+        issueForm.setFieldsValue({
+            ticket_name: ticket.ticket_name,
+            ticket_description: ticket.ticket_description
+        })
+
+        setOnUpdateId(ticket.ticket_id);
+
+        console.log(ticket.ticket_id)
+    }
 
 
 
@@ -108,7 +131,7 @@ const Ticket = () => {
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
-                                Submit
+                                {onUpdateId === null ? "Add Ticket" : "Update Ticket"}
                             </Button>
                         </Form.Item>
 
