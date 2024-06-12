@@ -1,6 +1,6 @@
 import {Button, Col, Form, Input, Row, Space, Table} from "antd";
 import {useEffect, useState} from "react";
-import {createTicketAPI, getTicketAPI} from "../datas/ticket-service";
+import {createTicketAPI, deleteTicketAPI, getTicketAPI} from "../datas/ticket-service";
 
 
 const Ticket = () => {
@@ -24,7 +24,7 @@ const Ticket = () => {
             render: (_, record) => (
                 <Space size="middle">
                     <Button type="link">Edit</Button>
-                    <Button type="link">Delete</Button>
+                    <Button type="link" onClick={()=>{deleteTicket(record.ticket_id)}}>Delete</Button>
                 </Space>
             ),
         },
@@ -58,6 +58,13 @@ const Ticket = () => {
     }
 
 
+
+
+
+    // ------ delete ticket ------
+    const deleteTicket = async (ticketId) => {
+        setData(await deleteTicketAPI(ticketId));
+    }
 
 
 

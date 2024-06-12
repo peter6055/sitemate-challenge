@@ -17,3 +17,11 @@ export const createTicketAPI = async (ticketData) => {
     return response.data;
 
 }
+
+
+
+
+export const deleteTicketAPI = async (ticketId) => {
+    const response = await axios.delete(`${API_HOST}${SERVICE_NAME}/${ticketId}`);
+    return response.data;
+}
