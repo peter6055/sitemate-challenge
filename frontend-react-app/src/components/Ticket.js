@@ -115,18 +115,34 @@ const Ticket = () => {
                             layout="vertical"
                             label="Title"
                             name="ticket_name"
-                            rules={[{ required: true }]}
+                            rules={[
+                                {
+                                required: true,
+                                message: 'Ticket title is required'
+                                }
+                            ]}
+
                         >
-                            <Input />
+                            <Input
+                                placeholder="Enter ticket title"
+                            />
                         </Form.Item>
 
                         <Form.Item
                             layout="vertical"
                             label="Description"
                             name="ticket_description"
-                            rules={[{ required: true }]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Ticket title is required'
+                                }
+                            ]}
                         >
-                            <Input.TextArea rows={10} />
+                            <Input.TextArea
+                                rows={10}
+                                placeholder="Enter ticket description"
+                            />
                         </Form.Item>
 
                         <Form.Item>
