@@ -10,3 +10,10 @@ export const getTicketAPI = async (ticketId) => {
     const response = await axios.get(`${API_HOST}${SERVICE_NAME}/${ticketId}`);
     return response.data;
 }
+
+
+export const createTicketAPI = async (ticketData) => {
+    const response = await axios.put(`${API_HOST}${SERVICE_NAME}`, ticketData);
+    return response.data;
+
+}

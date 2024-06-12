@@ -1,6 +1,6 @@
 import {Button, Col, Form, Input, Row, Space, Table} from "antd";
 import {useEffect, useState} from "react";
-import {getTicketAPI} from "../datas/ticket-service";
+import {createTicketAPI, getTicketAPI} from "../datas/ticket-service";
 
 
 const Ticket = () => {
@@ -41,6 +41,26 @@ const Ticket = () => {
         setData(await getTicketAPI("all"));
     }
 
+
+
+    // ------ add ticket ------
+    const createTicket = async () => {
+        const data = {
+            ticket_name: issueForm.getFieldValue('ticket_name'),
+            ticket_description: issueForm.getFieldValue('ticket_description')
+        }
+
+        setData(await createTicketAPI(data));
+
+        // clear form
+        issueForm.resetFields();
+
+    }
+
+
+
+
+
     return (
         <>
             <Row>
@@ -59,6 +79,7 @@ const Ticket = () => {
                         name="layout-multiple-horizontal"
                         form={issueForm}
                         layout="vertical"
+                        onFinish={createTicket}
                     >
                         <Form.Item
                             layout="vertical"
