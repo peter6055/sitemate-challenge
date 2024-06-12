@@ -1,4 +1,4 @@
-import {Button, Col, Form, Input, Row, Space, Table} from "antd";
+import {Alert, Button, Col, Form, Input, message, Row, Space, Table} from "antd";
 import {useEffect, useState} from "react";
 import {createTicketAPI, deleteTicketAPI, getTicketAPI, updateTicketAPI} from "../datas/ticket-service";
 
@@ -6,6 +6,7 @@ import {createTicketAPI, deleteTicketAPI, getTicketAPI, updateTicketAPI} from ".
 const Ticket = () => {
     const [data, setData] = useState([]);
     const [issueForm] = Form.useForm();
+    const [messageApi, messageContextHolder] = message.useMessage();
 
     const columns = [
         {
@@ -51,16 +52,18 @@ const Ticket = () => {
         }
 
 
-        if(onUpdateId === null){ // add new ticket
+        if(onUpdateItem === null){ // add new ticket
             // refresh data
             setData(await createTicketAPI(data));
+            messageApi.success('Ticket added successfully!');
 
         } else{ // update ticket
             // refresh data
-            setData(await updateTicketAPI(onUpdateId, data));
+            setData(await updateTicketAPI(onUpdateItem.ticket_id, data));
 
             // remove onUpdateId
-            setOnUpdateId(null);
+            setOnUpdateItem(null);
+            messageApi.success('Ticket updated successfully!');
         }
 
         // clear form
@@ -70,16 +73,14 @@ const Ticket = () => {
 
 
     // ------ edit ticket ------
-    const [onUpdateId, setOnUpdateId] = useState(null);
+    const [onUpdateItem, setOnUpdateItem] = useState(null);
     const editTicket = (ticket) => {
         issueForm.setFieldsValue({
             ticket_name: ticket.ticket_name,
             ticket_description: ticket.ticket_description
         })
 
-        setOnUpdateId(ticket.ticket_id);
-
-        console.log(ticket.ticket_id)
+        setOnUpdateItem(ticket);
     }
 
 
@@ -87,12 +88,14 @@ const Ticket = () => {
     // ------ delete ticket ------
     const deleteTicket = async (ticketId) => {
         setData(await deleteTicketAPI(ticketId));
+        messageApi.success('Ticket deleted successfully!');
     }
 
 
 
     return (
         <>
+            {messageContextHolder}
             <Row>
                 <Col span={14}>
                     <h3>📋 List View</h3>
@@ -105,6 +108,14 @@ const Ticket = () => {
 
                 <Col span={8}>
                     <h3>🖊️ Add Ticket</h3>
+                    {
+                        onUpdateItem !== null &&
+                        <>
+                            <Alert message={`Currently Editing "` + onUpdateItem.ticket_name + `"`} type="info" showIcon />
+                            <br/>
+                        </>
+                    }
+
                     <Form
                         name="layout-multiple-horizontal"
                         form={issueForm}
@@ -147,7 +158,7 @@ const Ticket = () => {
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
-                                {onUpdateId === null ? "Add Ticket" : "Update Ticket"}
+                                {onUpdateItem === null ? "Add Ticket" : "Update Ticket"}
                             </Button>
                         </Form.Item>
 
